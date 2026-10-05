@@ -3,79 +3,270 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saye | Personal Site</title>
+    <title>个人主页</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Segoe UI",system-ui,sans-serif;
+            scroll-behavior: smooth;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        :root {
+            --bg: #ffffff;
+            --text: #222222;
+            --card-bg: #f8f9fa;
+            --primary: #3b82f6;
+            --shadow: rgba(0,0,0,0.1);
+        }
+        .dark {
+            --bg: #0f172a;
+            --text: #e2e8f0;
+            --card-bg: #1e293b;
+            --primary: #60a5fa;
+            --shadow: rgba(0,0,0,0.3);
         }
         body {
-            background: #0d0d0d;
-            color: #eaeaea;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 0 12%;
-            line-height: 1.7;
+            background-color: var(--bg);
+            color: var(--text);
+            transition: background 0.3s, color 0.3s;
+            line-height: 1.6;
         }
-        .name {
-            font-size: 3.2rem;
-            font-weight: 600;
-            letter-spacing: 4px;
-            margin-bottom: 12px;
-        }
-        .info {
-            color: #aaa;
-            font-size: 1rem;
-            max-width: 520px;
-            margin-bottom: 30px;
-        }
-        .links a {
-            color: #fff;
-            text-decoration: none;
-            border: 1px solid #444;
-            padding: 8px 18px;
-            border-radius: 4px;
-            margin-right: 12px;
-            margin-bottom: 10px;
-            display: inline-block;
-            transition: 0.2s ease;
-        }
-        .links a:hover {
-            background: #fff;
-            color: #000;
-            border-color: #fff;
-        }
-        .foot {
+        nav {
             position: fixed;
-            bottom: 20px;
-            left: 12%;
-            color: #555;
-            font-size: 0.85rem;
+            top:0;
+            width:100%;
+            background: var(--card-bg);
+            box-shadow: 0 2px 10px var(--shadow);
+            z-index:99;
+            padding: 1rem 5%;
+            display:flex;
+            justify-content: space-between;
+            align-items:center;
+        }
+        .logo {
+            font-weight:bold;
+            font-size:1.2rem;
+            color: var(--primary);
+        }
+        .nav-links a {
+            color: var(--text);
+            text-decoration:none;
+            margin-left:1.5rem;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        #themeBtn {
+            border: none;
+            background: var(--primary);
+            color:white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            cursor:pointer;
+        }
+        section {
+            min-height:100vh;
+            padding: 100px 5% 40px;
+            max-width:1200px;
+            margin:0 auto;
+        }
+        .hero {
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            min-height:100vh;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom:1rem;
+        }
+        .hero p {
+            font-size:1.2rem;
+            opacity:0.8;
+            max-width:700px;
+        }
+        .btn {
+            display:inline-block;
+            margin-top:1.5rem;
+            padding:0.8rem 1.6rem;
+            background:var(--primary);
+            color:white;
+            border-radius:8px;
+            text-decoration:none;
+        }
+        .title {
+            font-size:2rem;
+            margin-bottom:2rem;
+            border-left:5px solid var(--primary);
+            padding-left:1rem;
+        }
+        .card-grid {
+            display:grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+            gap:1.2rem;
+        }
+        .card {
+            background:var(--card-bg);
+            padding:1.5rem;
+            border-radius:12px;
+            box-shadow:0 4px 12px var(--shadow);
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .timeline {
+            border-left:3px solid var(--primary);
+            padding-left:2rem;
+            margin-left:0.5rem;
+        }
+        .timeline-item {
+            margin-bottom:2rem;
+            position:relative;
+        }
+        .timeline-item::before {
+            content:"";
+            position:absolute;
+            left:-2.45rem;
+            top:0.4rem;
+            width:12px;
+            height:12px;
+            border-radius:50%;
+            background:var(--primary);
+        }
+        .social a {
+            color:var(--primary);
+            font-size:1.1rem;
+            margin-right:1rem;
+            text-decoration:none;
+        }
+        footer {
+            text-align:center;
+            padding:2rem;
+            opacity:0.7;
+        }
+        @media (max-width:768px){
+            .nav-links { display:none; }
+            .hero h1 { font-size:2rem; }
+        }
+        .fade-in {
+            opacity:0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        .fade-in.show {
+            opacity:1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
+    <nav>
+        <div class="logo">MySite</div>
+        <div class="nav-links">
+            <a href="#home">首页</a>
+            <a href="#about">关于</a>
+            <a href="#skills">技能</a>
+            <a href="#projects">项目</a>
+            <a href="#timeline">经历</a>
+            <a href="#contact">联系</a>
+        </div>
+        <button id="themeBtn">切换暗色</button>
+    </nav>
 
-    <h1 class="name">Saye</h1>
+    <section id="home" class="hero">
+        <h1>你好，我是Saye</h1>
+        <p>逆向开发 / C & C++ / Android底层 / 热爱二进制安全。</p>
+        <a href="#projects" class="btn">查看我的项目</a>
+    </section>
 
-    <p class="info">
-        喜欢编程，乐于探索。<br>
-        保持好奇，持续学习。
-    </p>
+    <section id="about" class="fade-in">
+        <h2 class="title">关于我</h2>
+        <div class="card">
+            <p>专注底层逆向、ELF Hook、Android AArch64二进制研究。喜欢写工具，折腾开源项目。</p>
+            <br>
+            <p>平时研究：LD Hook、OLLVM混淆、LIEF、Radare2、CTF逆向。</p>
+        </div>
+    </section>
 
-    <div class="links">
-        <a href="https://github.com/Saye-Zou">GitHub</a>
-        <a href="#">Blog</a>
-        <a href="#">About</a>
-    </div>
+    <section id="skills" class="fade-in">
+        <h2 class="title">技能栈</h2>
+        <div class="card-grid">
+            <div class="card">
+                <h3>编程语言</h3>
+                <p>C / C++ / Shell / Python</p>
+            </div>
+            <div class="card">
+                <h3>逆向相关</h3>
+                <p>ELF, AArch64, LIEF, Radare2</p>
+            </div>
+            <div class="card">
+                <h3>工具 & 平台</h3>
+                <p>Git, GitHub, Android, Linux</p>
+            </div>
+        </div>
+    </section>
 
-    <div class="foot">
-        © 2026 Saye
-    </div>
+    <section id="projects" class="fade-in">
+        <h2 class="title">项目</h2>
+        <div class="card-grid">
+            <div class="card">
+                <h3>ELF Hook工具</h3>
+                <p>Android平台LD Hook实验项目</p>
+                <a href="https://github.com/Saye111789" target="_blank" class="btn" style="padding:0.5rem 1rem;font-size:0.9rem;">GitHub</a>
+            </div>
+            <div class="card">
+                <h3>OLLVM混淆Demo</h3>
+                <p>编译器控制流混淆测试</p>
+                <a href="https://github.com/Saye111789" target="_blank" class="btn" style="padding:0.5rem 1rem;font-size:0.9rem;">GitHub</a>
+            </div>
+        </div>
+    </section>
 
+    <section id="timeline" class="fade-in">
+        <h2 class="title">经历时间线</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3>开始学习底层逆向</h3>
+                <p>研究ELF结构，LIEF，静态二进制分析</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Android AArch64 Hook研究</h3>
+                <p>LD预加载、inline hook实验</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="fade-in">
+        <h2 class="title">联系我</h2>
+        <div class="card social">
+            <p>GitHub：<a href="https://github.com/Saye111789" target="_blank">github.com/Saye111789</a></p>
+            <p>邮箱：example@test.com</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Saye | Powered by GitHub Pages</p>
+    </footer>
+
+    <script>
+        // 暗色模式切换
+        const themeBtn = document.getElementById('themeBtn');
+        themeBtn.onclick = ()=>{
+            document.body.classList.toggle('dark');
+            themeBtn.innerText = document.body.classList.contains('dark') ? "切换亮色" : "切换暗色";
+        }
+
+        // 滚动渐入动画
+        const fadeEls = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries)=>{
+            entries.forEach(e=>{
+                if(e.isIntersecting) e.target.classList.add('show');
+            })
+        }, {threshold:0.1})
+        fadeEls.forEach(el=>observer.observe(el))
+    </script>
 </body>
 </html>
